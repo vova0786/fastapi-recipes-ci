@@ -1,0 +1,10 @@
+-r requirements.txt
+black==24.8.0
+flake8==7.1.1
+flake8-bugbear==24.8.19
+flake8-pie==0.16.0
+isort==5.13.2
+mypy==1.10.0
+sqlalchemy2-stubs==0.0.2a38
+pytest==8.3.3
+httpx==0.24.1

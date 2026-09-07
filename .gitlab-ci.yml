@@ -1,0 +1,38 @@
+image: python:3.11
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH'
+
+stages:
+  - test
+
+default:
+  before_script:
+    - python -m pip install -r requirements-dev.txt
+
+pytest:
+  stage: test
+  script:
+    - python -m pytest
+
+flake8:
+  stage: test
+  script:
+    - python -m flake8 .
+
+isort:
+  stage: test
+  script:
+    - python -m isort --check-only --diff --skip .venv .
+
+black:
+  stage: test
+  script:
+    - python -m black --check --diff .
+
+mypy:
+  stage: test
+  script:
+    - python -m mypy main.py database.py models.py schemas.py tests
