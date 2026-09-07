@@ -28,44 +28,19 @@ SQLite создаёт `recipes.db` при запуске. Тесты испол�
 базу для каждого теста. Проверяются создание и чтение рецепта, счётчик
 просмотров, сортировка, отсутствие рецепта и некорректные входные данные.
 
-## Публикация в GitLab
+## GitHub Actions
 
-Публикация и проверка удалённого pipeline требуют доступа к вашему аккаунту
-GitLab. Выполните оставшиеся шаги самостоятельно:
+Публичный репозиторий: https://github.com/vova0786/fastapi-recipes-ci.
+Для сдачи используется GitHub Actions — разрешённая заданием альтернатива GitLab CI.
+Конфигурация `.github/workflows/ci.yml` запускает pytest, flake8, isort, black
+и mypy при каждом push в любую ветку и при создании или обновлении Pull Request.
+Пять результатов проверок доступны на вкладке Actions.
 
-1. На **gitlab.com** создайте пустой проект с видимостью **Public**,
-   без начального README. Учебный gitlab.skillbox.ru для сдачи не подходит.
-2. Скопируйте из этой папки в отдельную папку вне учебного репозитория
-   `main.py`, `database.py`, `models.py`, `schemas.py`, `tests`,
-   `requirements.txt`, `requirements-dev.txt`, `pyproject.toml`,
-   `.flake8`, `.gitignore`, `.gitlab-ci.yml` и `README.md`.
-   Не переносите `.venv`, кеши и файлы базы данных.
-3. Откройте PowerShell в новой папке и выполните команды ниже,
-   заменив `YOUR_LOGIN` и `YOUR_PROJECT` своими значениями:
+Для проверки Pull Request создайте ветку, внесите изменение в README,
+отправьте ветку и откройте Pull Request в main. Дождитесь успешных проверок.
+В настройках защиты ветки main включите обязательные проверки
+pytest, flake8, isort, black и mypy перед слиянием.
+Для сдачи отправьте ссылку на репозиторий и отметку «Сделано».
 
-   ```powershell
-   git init -b main
-   git add .
-   git commit -m "Настроены линтеры и тесты FastAPI"
-   git remote add origin https://gitlab.com/YOUR_LOGIN/YOUR_PROJECT.git
-   git push -u origin main
-   ```
-
-4. В разделе **Build → Pipelines** проверьте успешность всех пяти заданий.
-   Если задания ожидают исполнителя, включите доступный runner в
-   **Settings → CI/CD → Runners**.
-5. Создайте новую ветку, внесите изменение, отправьте ветку и откройте
-   Merge Request. Проверьте, что CI запускается и для push, и для Merge Request.
-6. В **Settings → Merge requests → Merge checks** включите
-   **Pipelines must succeed**, чтобы нельзя было принять изменения
-   с неуспешными проверками.
-7. Убедитесь, что проект виден без авторизации. Отправьте ссылку на проект
-   и отметку «Сделано» в форме сдачи задания.
-
-`.gitlab-ci.yml` должен находиться в корне нового репозитория.
-Все пять заданий выполняются для каждого push в любую ветку и каждого
-Merge Request. Правила событий настроены согласно
-[документации GitLab](https://docs.gitlab.com/ci/jobs/job_rules/).
-Совместимость форматирования обеспечивают профиль `black` для isort,
-длина строки 88 и исключение E203 для flake8 согласно
-[документации Black](https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html).
+Конфигурация основана на документации:
+https://docs.github.com/en/actions/tutorials/build-and-test-code/python.
